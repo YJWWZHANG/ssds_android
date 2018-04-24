@@ -1,0 +1,27 @@
+ext {
+    def organization = "com.dashi1314"
+    android = [
+            organization     : "${organization}",
+            applicationId    : "${organization}.ssds",
+            compileSdkVersion: 27,
+            buildToolsVersion: "27.0.3",
+            minSdkVersion    : 19,
+            targetSdkVersion : 27,
+            versionCode      : 100,
+            versionName      : "1.0.0",
+            resConfigs       : "zh"
+    ]
+
+    //合并到主程序运行的组件,没有填写的组件则可以独立运行
+    merge = [
+//            "acgnews",
+//            "acgschedule",
+//            "acgcomic"
+    ]
+
+    dependencies = [
+            support    : "27.1.1",
+            butterknife: "8.4.0",
+    ]
+
+}
