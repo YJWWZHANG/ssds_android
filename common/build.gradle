@@ -34,4 +34,7 @@ dependencies {
     androidTestApi 'com.android.support.test:runner:1.0.1'
     androidTestApi 'com.android.support.test.espresso:espresso-core:3.0.1'
 
+    api "com.jakewharton:butterknife:$rootProject.ext.dependencies.butterknife"
+
+
 }
