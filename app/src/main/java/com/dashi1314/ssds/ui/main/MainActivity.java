@@ -1,21 +1,26 @@
-package com.dashi1314.ssds;
+package com.dashi1314.ssds.ui.main;
 
-import android.os.Bundle;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.dashi1314.common.base.SimpleActivity;
+import com.dashi1314.common.base.BaseActivity;
+import com.dashi1314.ssds.R;
+import com.dashi1314.ssds.presenter.main.MainContract;
+import com.dashi1314.ssds.presenter.main.MainPresenter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends SimpleActivity {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
     @BindView(R.id.tv_test)
     TextView mTvTest;
+
+    @Override
+    protected void initInject() {
+
+    }
 
     @Override
     protected int getLayoutId() {
@@ -30,5 +35,15 @@ public class MainActivity extends SimpleActivity {
     @OnClick(R.id.tv_test)
     public void onViewClicked() {
         AppUtils.exitApp();
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
     }
 }
