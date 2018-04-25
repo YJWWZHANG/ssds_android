@@ -24,5 +24,6 @@ android {
 
 dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.dependencies.butterknife"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.dagger2"
     implementation project(':common')
 }

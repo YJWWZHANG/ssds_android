@@ -30,9 +30,12 @@ dependencies {
     api "com.android.support:recyclerview-v7:$rootProject.ext.dependencies.support"
     api 'com.android.support.constraint:constraint-layout:1.1.0'
     testApi 'junit:junit:4.12'
-    androidTestApi 'com.android.support.test:runner:1.0.1'
-    androidTestApi 'com.android.support.test.espresso:espresso-core:3.0.1'
-
+    androidTestApi 'com.android.support.test:runner:1.0.2'
+    androidTestApi 'com.android.support.test.espresso:espresso-core:3.0.2'
+    /*工具*/
     api "com.jakewharton:butterknife:$rootProject.ext.dependencies.butterknife"
+    api "com.google.dagger:dagger:$rootProject.ext.dependencies.dagger2"
+    api 'org.greenrobot:eventbus:3.1.1'
+    api 'com.blankj:utilcode:1.14.0'
 
 }

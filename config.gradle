@@ -22,6 +22,7 @@ ext {
     dependencies = [
             support    : "27.1.1",
             butterknife: "8.4.0",
+            dagger2    : "2.14.1",
     ]
 
 }
