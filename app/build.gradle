@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'com.alibaba.arouter'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -22,8 +23,13 @@ android {
     }
 }
 
+rootProject.ext.merge.each { c ->
+    project.dependencies.add("implementation", project.project(':component-' + c))
+}
+
 dependencies {
+    implementation project(':common')
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.dependencies.butterknife"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.dagger2"
-    implementation project(':common')
+//    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.dependencies.router_compiler"
 }

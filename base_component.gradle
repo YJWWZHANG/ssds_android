@@ -1,6 +1,6 @@
 //模块名称
 def componentName = project.getName().replaceAll("component-", "")
-def isRunAlone = rootProject.ext.merge.contains(componentName)
+def isRunAlone = !rootProject.ext.merge.contains(componentName)
 if (isRunAlone) {
     apply plugin: 'com.android.application'
 } else {
@@ -20,6 +20,14 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+        resourcePrefix componentName + "_"
+//        resValue "string", componentName + "_module_name", project.getName()
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

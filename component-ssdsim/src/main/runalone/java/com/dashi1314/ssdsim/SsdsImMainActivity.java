@@ -1,5 +1,7 @@
 package com.dashi1314.ssdsim;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
@@ -18,6 +20,10 @@ public class SsdsImMainActivity extends SimpleActivity {
     FrameLayout mLayoutLoadFragment;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+
+    public static void launch(Activity activity) {
+        activity.startActivity(new Intent(activity, SsdsImMainActivity.class));
+    }
 
     @Override
     protected int getLayoutId() {

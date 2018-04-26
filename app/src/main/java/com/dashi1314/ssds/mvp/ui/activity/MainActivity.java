@@ -10,6 +10,7 @@ import com.dashi1314.ssds.di.component.DaggerActivityComponent;
 import com.dashi1314.ssds.di.module.ActivityModule;
 import com.dashi1314.ssds.mvp.contract.MainContract;
 import com.dashi1314.ssds.mvp.presenter.MainPresenter;
+import com.dashi1314.ssdsim.SsdsImTestActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,6 +55,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         switch (view.getId()) {
             case R.id.btn_test:
                 mPresenter.loadTest();
+                SsdsImTestActivity.launch(this);
                 break;
         }
     }
