@@ -1,6 +1,7 @@
-package com.dashi1314.ssds.presenter.main;
+package com.dashi1314.ssds.mvp.presenter;
 
 import com.dashi1314.common.base.RxPresenter;
+import com.dashi1314.ssds.mvp.contract.MainContract;
 
 import javax.inject.Inject;
 

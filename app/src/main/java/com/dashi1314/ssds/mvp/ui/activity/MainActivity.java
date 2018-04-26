@@ -1,4 +1,4 @@
-package com.dashi1314.ssds.ui.main;
+package com.dashi1314.ssds.mvp.ui.activity;
 
 import android.view.View;
 import android.widget.TextView;
@@ -8,10 +8,8 @@ import com.dashi1314.common.base.BaseActivity;
 import com.dashi1314.ssds.R;
 import com.dashi1314.ssds.di.component.DaggerActivityComponent;
 import com.dashi1314.ssds.di.module.ActivityModule;
-import com.dashi1314.ssds.presenter.main.MainContract;
-import com.dashi1314.ssds.presenter.main.MainPresenter;
-
-import javax.inject.Inject;
+import com.dashi1314.ssds.mvp.contract.MainContract;
+import com.dashi1314.ssds.mvp.presenter.MainPresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
