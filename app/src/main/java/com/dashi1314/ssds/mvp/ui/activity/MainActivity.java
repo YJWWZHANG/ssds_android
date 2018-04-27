@@ -1,6 +1,8 @@
 package com.dashi1314.ssds.mvp.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -14,12 +16,15 @@ import com.dashi1314.ssds.mvp.contract.MainContract;
 import com.dashi1314.ssds.mvp.presenter.MainPresenter;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
     @BindView(R.id.tv_test)
     TextView mTvTest;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
 
     @Override
     protected void initInject() {
@@ -33,7 +38,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     protected void initEventAndData() {
-
+        mTvTitle.setText(R.string.app_name);
     }
 
     @Override
@@ -64,5 +69,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void setTest(String s) {
         mTvTest.setText(s);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

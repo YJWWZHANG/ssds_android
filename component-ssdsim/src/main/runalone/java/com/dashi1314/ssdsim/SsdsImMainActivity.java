@@ -33,7 +33,7 @@ public class SsdsImMainActivity extends SimpleActivity {
     @Override
     protected void initEventAndData() {
         setSupportActionBar(mToolbar);
-        mTvTitle.setText("随身大师-IM模块");
+        mTvTitle.setText(R.string.ssdsim_app_name);
     }
 
 }
