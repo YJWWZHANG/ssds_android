@@ -3,14 +3,15 @@ package com.dashi1314.ssds.mvp.ui.activity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
 import com.dashi1314.common.base.BaseActivity;
+import com.dashi1314.common.router.RouterConstants;
 import com.dashi1314.ssds.R;
 import com.dashi1314.ssds.di.component.DaggerActivityComponent;
 import com.dashi1314.ssds.di.module.ActivityModule;
 import com.dashi1314.ssds.mvp.contract.MainContract;
 import com.dashi1314.ssds.mvp.presenter.MainPresenter;
-import com.dashi1314.ssdsim.SsdsImTestActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -54,8 +55,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_test:
+                ARouter.getInstance().build(RouterConstants.PATH_TEST).withString("key", "zqb").navigation();
                 mPresenter.loadTest();
-                SsdsImTestActivity.launch(this);
                 break;
         }
     }

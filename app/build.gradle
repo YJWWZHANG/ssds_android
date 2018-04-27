@@ -13,6 +13,12 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -31,5 +37,5 @@ dependencies {
     implementation project(':common')
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.dependencies.butterknife"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.dagger2"
-//    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.dependencies.router_compiler"
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.dependencies.router_compiler"
 }

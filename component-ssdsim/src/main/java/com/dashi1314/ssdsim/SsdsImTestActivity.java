@@ -1,18 +1,12 @@
 package com.dashi1314.ssdsim;
 
-import android.app.Activity;
-import android.content.Intent;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dashi1314.common.base.SimpleActivity;
 import com.dashi1314.common.router.RouterConstants;
 
 @Route(path = RouterConstants.PATH_TEST)
 public class SsdsImTestActivity extends SimpleActivity {
-
-    public static void launch(Activity activity) {
-        activity.startActivity(new Intent(activity, SsdsImTestActivity.class));
-    }
 
     @Override
     protected int getLayoutId() {
@@ -21,7 +15,8 @@ public class SsdsImTestActivity extends SimpleActivity {
 
     @Override
     protected void initEventAndData() {
-
+        String key = getIntent().getStringExtra("key");
+        ToastUtils.showLong(key);
     }
 
     @Override

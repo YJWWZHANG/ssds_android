@@ -2,6 +2,6 @@ android {
     dependencies {
         annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.dependencies.butterknife"
         annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.dagger2"
-//        annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.dependencies.router_compiler"
+        annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.dependencies.router_compiler"
     }
 }
