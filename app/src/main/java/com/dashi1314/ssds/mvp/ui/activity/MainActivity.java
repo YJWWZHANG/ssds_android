@@ -1,30 +1,32 @@
 package com.dashi1314.ssds.mvp.ui.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
 import com.dashi1314.common.base.BaseActivity;
-import com.dashi1314.common.router.RouterConstants;
+import com.dashi1314.common.base.NullFragment;
 import com.dashi1314.ssds.R;
 import com.dashi1314.ssds.di.component.DaggerActivityComponent;
 import com.dashi1314.ssds.di.module.ActivityModule;
 import com.dashi1314.ssds.mvp.contract.MainContract;
 import com.dashi1314.ssds.mvp.presenter.MainPresenter;
+import com.roughike.bottombar.BottomBar;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import me.yokeyword.fragmentation.SupportFragment;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
-    @BindView(R.id.tv_test)
-    TextView mTvTest;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+    @BindView(R.id.bottom_bar)
+    BottomBar mBottomBar;
+
+    private HashMap<String, Class<? extends SupportFragment>> mLoadFragments = new HashMap<>();
 
     @Override
     protected void initInject() {
@@ -38,11 +40,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     protected void initEventAndData() {
+        loadMultipleRootFragment(R.id.fl_content, 0, new NullFragment(), new NullFragment(), new NullFragment());
+
         mTvTitle.setText(R.string.app_name);
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressedSupport() {
         AppUtils.exitApp();
     }
 
@@ -56,19 +60,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     }
 
-    @OnClick({R.id.btn_test})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_test:
-                ARouter.getInstance().build(RouterConstants.PATH_TEST).withString("key", "zqb").navigation();
-                mPresenter.loadTest();
-                break;
-        }
-    }
 
     @Override
     public void setTest(String s) {
-        mTvTest.setText(s);
+
     }
 
     @Override

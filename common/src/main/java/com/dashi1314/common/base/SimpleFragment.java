@@ -13,8 +13,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportFragment;
 
-public abstract class SimpleFragment extends Fragment {
+public abstract class SimpleFragment extends SupportFragment {
 
     private Unbinder mUnbinder;
 

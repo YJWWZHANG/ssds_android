@@ -20,7 +20,7 @@ public class SsdsImTestActivity extends SimpleActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressedSupport() {
         finish();
     }
 }

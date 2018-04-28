@@ -10,8 +10,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportActivity;
 
-public abstract class SimpleActivity extends AppCompatActivity {
+public abstract class SimpleActivity extends SupportActivity {
 
     private Unbinder mUnbinder;
 
