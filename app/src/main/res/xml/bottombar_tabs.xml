@@ -2,14 +2,14 @@
 <tabs>
     <tab
         icon="@drawable/nav_schedule"
-        id="@+id/nav_schedule"
+        id="@+id/nav_1"
         title="1" />
     <tab
         icon="@drawable/nav_comic"
-        id="@+id/nav_comic"
+        id="@+id/nav_2"
         title="2" />
     <tab
         icon="@drawable/nav_news"
-        id="@+id/nav_news"
+        id="@+id/nav_3"
         title="3" />
 </tabs>
