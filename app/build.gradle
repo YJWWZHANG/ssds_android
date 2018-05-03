@@ -35,6 +35,11 @@ android {
         }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'x86'
+        }
     }
     buildTypes {
         release {
@@ -56,4 +61,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.dependencies.butterknife"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.dagger2"
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.dependencies.router_compiler"
+    /*阿里云推送*/
+    implementation 'com.aliyun.ams:alicloud-android-push:3.1.2'
 }
