@@ -9,7 +9,7 @@ import com.dashi1314.ssdsim.di.module.FragmentModule;
 import com.dashi1314.ssdsim.mvp.contract.SsdsImMainContract;
 import com.dashi1314.ssdsim.mvp.presenter.SsdsImMainPresenter;
 
-@Route(path = RouterConstants.PATH_SSDSIM_MAIN)
+@Route(path = RouterConstants.PATH_SSDSIM_FRAGMENT_MAIN)
 public class SsdsImMainFragment extends BaseFragment<SsdsImMainPresenter> implements SsdsImMainContract.View{
     @Override
     protected void initInject() {

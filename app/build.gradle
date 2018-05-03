@@ -1,6 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'com.alibaba.arouter'
+apply plugin: 'com.mob.sdk'
+
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "259259ecf38c0"
+    appSecret "d4ce7685fea07ef0128c12971e2c882c"
+    SMSSDK {
+        gui false
+    }
+}
 
 Properties properties = new Properties()
 File localPropertiesFile = project.rootProject.file("local.properties");
@@ -40,6 +50,7 @@ android {
             //选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi', 'x86'
         }
+
     }
     buildTypes {
         release {
@@ -50,6 +61,8 @@ android {
             signingConfig signingConfigs.config
         }
     }
+
+
 }
 
 rootProject.ext.merge.each { c ->

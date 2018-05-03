@@ -12,13 +12,13 @@ import com.dashi1314.ssds.di.component.DaggerActivityComponent;
 import com.dashi1314.ssds.di.module.ActivityModule;
 import com.dashi1314.ssds.mvp.contract.MainContract;
 import com.dashi1314.ssds.mvp.presenter.MainPresenter;
-import com.dashi1314.ssdsim.mvp.ui.fragment.SsdsImMainFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
+import cn.smssdk.SMSSDK;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
@@ -28,8 +28,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @BindView(R.id.bottom_bar)
     BottomBar mBottomBar;
 
-    private String mHideFragment = "/ssdsim/1";
-    private String mShowFragment = "/ssdsim/1";
+    private String mHideFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_HOME;
+    private String mShowFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_HOME;
 
     private HashMap<String, Class<? extends SupportFragment>> mLoadFragments = new HashMap<>();
 
@@ -45,8 +45,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     protected void initEventAndData() {
-        if (mLoadFragments.get("/ssdsim/1") == null) {
-            loadMultipleRootFragment(R.id.fl_content, 0, getTargetFragment("/ssdsim/1"), getTargetFragment(RouterConstants.PATH_SSDSIM_MAIN), getTargetFragment("/ssdsim/3"));
+        if (mLoadFragments.get(RouterConstants.PATH_SSDSHOME_FRAGMENT_HOME) == null) {
+            loadMultipleRootFragment(R.id.fl_content, 0, getTargetFragment(RouterConstants.PATH_SSDSHOME_FRAGMENT_HOME), getTargetFragment(RouterConstants.PATH_SSDSIM_FRAGMENT_MAIN), getTargetFragment("/ssdsim/3"));
         }
 
         mTvTitle.setText(R.string.app_name);
@@ -56,11 +56,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 String title = "";
                 switch (tabId) {
                     case R.id.nav_1:
-                        mShowFragment = "/ssdsim/1";
+                        mShowFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_HOME;
                         title = "1";
                         break;
                     case R.id.nav_2:
-                        mShowFragment = RouterConstants.PATH_SSDSIM_MAIN;
+                        mShowFragment = RouterConstants.PATH_SSDSIM_FRAGMENT_MAIN;
                         title = "2";
                         break;
                     case R.id.nav_3:
@@ -80,6 +80,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void onBackPressedSupport() {
         AppUtils.exitApp();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //用完回调要注销掉，否则可能会出现内存泄露
+        SMSSDK.unregisterAllEventHandler();
     }
 
     private SupportFragment getTargetFragment(String path) {

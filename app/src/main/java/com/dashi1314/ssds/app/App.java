@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.dashi1314.ssds.R;
 import com.dashi1314.ssds.service.PushMessageIntentService;
+import com.mob.MobSDK;
 
 public class App extends Application {
 
@@ -26,6 +27,8 @@ public class App extends Application {
         ARouter.init(this);     // 尽可能早，推荐在Application中初始化
 
         initCloudChannel(this);
+
+        MobSDK.init(this);
     }
 
     private boolean isDebug() {
