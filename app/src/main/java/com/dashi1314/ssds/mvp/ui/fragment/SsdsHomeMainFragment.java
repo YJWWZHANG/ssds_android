@@ -4,14 +4,17 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
 import com.dashi1314.common.base.SimpleFragment;
 import com.dashi1314.common.router.RouterConstants;
 import com.dashi1314.ssds.R;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
@@ -30,7 +33,7 @@ public class SsdsHomeMainFragment extends SimpleFragment {
 
     }
 
-    @OnClick({R.id.btn_send, R.id.btn_commit})
+    @OnClick({R.id.btn_send, R.id.btn_commit, R.id.btn_share})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
@@ -41,6 +44,9 @@ public class SsdsHomeMainFragment extends SimpleFragment {
                 if (!StringUtils.isEmpty(code)) {
                     submitCode("86", "15813368484", code);
                 }
+                break;
+            case R.id.btn_share:
+                showShare();
                 break;
         }
     }
@@ -82,6 +88,27 @@ public class SsdsHomeMainFragment extends SimpleFragment {
         });
         // 触发操作
         SMSSDK.submitVerificationCode(country, phone, code);
+    }
+
+    private void showShare() {
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+        // title标题，微信、QQ和QQ空间等平台使用
+        oks.setTitle("分享");
+        // titleUrl QQ和QQ空间跳转链接
+        oks.setTitleUrl("http://sharesdk.cn");
+        // text是分享文本，所有平台都需要这个字段
+        oks.setText("我是分享文本");
+        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        // url在微信、微博，Facebook等平台中使用
+        oks.setUrl("http://sharesdk.cn");
+        // comment是我对这条分享的评论，仅在人人网使用
+        oks.setComment("我是测试评论文本");
+        // 启动分享GUI
+        oks.show(Utils.getApp());
     }
 
 }
