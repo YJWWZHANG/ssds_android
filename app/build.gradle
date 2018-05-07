@@ -14,9 +14,9 @@ MobSDK {
         //平台配置信息
         devInfo {
             SinaWeibo {
-                appKey "568898243"
-                appSecret "38a4f8204cc784f81f9f0daaf31e02e3"
-                callbackUri "http://www.sharesdk.cn"
+                appKey "2214856520"
+                appSecret "32bec99413fb6d4fd61bb8d5bd184843"
+                callbackUri "https://www.dashi1314.com"
                 shareByAppClient true
             }
             Wechat {

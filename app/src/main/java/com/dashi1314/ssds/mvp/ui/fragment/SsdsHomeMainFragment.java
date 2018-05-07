@@ -1,10 +1,12 @@
 package com.dashi1314.ssds.mvp.ui.fragment;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -12,9 +14,19 @@ import com.dashi1314.common.base.SimpleFragment;
 import com.dashi1314.common.router.RouterConstants;
 import com.dashi1314.ssds.R;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
@@ -22,6 +34,8 @@ import cn.smssdk.SMSSDK;
 public class SsdsHomeMainFragment extends SimpleFragment {
     @BindView(R.id.et_code)
     EditText mEtCode;
+    @BindView(R.id.et_phone)
+    EditText mEtPhone;
 
     @Override
     protected int getLayoutId() {
@@ -33,20 +47,95 @@ public class SsdsHomeMainFragment extends SimpleFragment {
 
     }
 
-    @OnClick({R.id.btn_send, R.id.btn_commit, R.id.btn_share})
+    @OnClick({R.id.btn_send, R.id.btn_commit, R.id.btn_share, R.id.btn_qq_login, R.id.btn_wechat_login, R.id.btn_sina_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
-                sendCode("86", "15813368484");
+                String phone = mEtPhone.getText().toString();
+                if (!StringUtils.isSpace(phone)) {
+                    sendCode("86", phone);
+                } else {
+                    ToastUtils.showShort("请输入手机号");
+                }
                 break;
             case R.id.btn_commit:
                 String code = mEtCode.getText().toString();
-                if (!StringUtils.isEmpty(code)) {
+                if (!StringUtils.isSpace(code)) {
                     submitCode("86", "15813368484", code);
+                } else {
+                    ToastUtils.showShort("请输入验证码");
                 }
                 break;
             case R.id.btn_share:
                 showShare();
+                break;
+            case R.id.btn_wechat_login:
+                Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
+                wechat.SSOSetting(false);  //设置false表示使用SSO授权方式
+                wechat.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+                    }
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {
+
+                    }
+                }); // 设置分享事件回调
+                wechat.authorize();//单独授权
+                wechat.showUser(null);//授权并获取用户信息
+                break;
+            case R.id.btn_qq_login:
+                Platform qq = ShareSDK.getPlatform(QQ.NAME);
+                qq.SSOSetting(false);  //设置false表示使用SSO授权方式
+                qq.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+                    }
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {
+
+                    }
+                }); // 设置分享事件回调
+                qq.authorize();//单独授权
+                qq.showUser(null);//授权并获取用户信息
+                break;
+            case R.id.btn_sina_login:
+                Platform sinaWiebo = ShareSDK.getPlatform(SinaWeibo.NAME);
+                sinaWiebo.SSOSetting(false);  //设置false表示使用SSO授权方式
+                sinaWiebo.setPlatformActionListener(new PlatformActionListener() {
+                    @Override
+                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+                    }
+
+                    @Override
+                    public void onError(Platform platform, int i, Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onCancel(Platform platform, int i) {
+
+                    }
+                }); // 设置分享事件回调
+                sinaWiebo.authorize();//单独授权
+                sinaWiebo.showUser(null);//授权并获取用户信息
+                break;
+            default:
                 break;
         }
     }
@@ -60,7 +149,7 @@ public class SsdsHomeMainFragment extends SimpleFragment {
                     // TODO 处理成功得到验证码的结果
                     // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
                     ToastUtils.showLong("验证码发送成功");
-                } else{
+                } else {
                     // TODO 处理错误的结果
                     ToastUtils.showLong("验证码发送失败");
                 }
@@ -79,7 +168,7 @@ public class SsdsHomeMainFragment extends SimpleFragment {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     // TODO 处理验证成功的结果
                     ToastUtils.showLong("手机号验证成功");
-                } else{
+                } else {
                     // TODO 处理错误的结果
                     ToastUtils.showLong("手机号验证失败");
                 }
