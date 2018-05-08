@@ -1,9 +1,6 @@
 package com.dashi1314.ssds.mvp.ui.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -17,9 +14,7 @@ import com.dashi1314.ssds.R;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
@@ -30,7 +25,7 @@ import cn.sharesdk.wechat.friends.Wechat;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-@Route(path = RouterConstants.PATH_SSDSHOME_FRAGMENT_HOME)
+@Route(path = RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN)
 public class SsdsHomeMainFragment extends SimpleFragment {
     @BindView(R.id.et_code)
     EditText mEtCode;

@@ -7,5 +7,5 @@ public interface RouterConstants {
     String PATH_SSDSIM_FRAGMENT_MAIN = "/ssdsim/fragment_main";
 
     //ssdshome
-    String PATH_SSDSHOME_FRAGMENT_HOME = "/ssdshome/fragment_home";
+    String PATH_SSDSHOME_FRAGMENT_MAIN = "/ssdshome/fragment_main";
 }
