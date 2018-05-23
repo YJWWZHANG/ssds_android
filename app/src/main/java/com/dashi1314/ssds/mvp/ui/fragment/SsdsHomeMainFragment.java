@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -70,17 +71,19 @@ public class SsdsHomeMainFragment extends SimpleFragment {
                 wechat.setPlatformActionListener(new PlatformActionListener() {
                     @Override
                     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-
+                        ToastUtils.showLong("onComplete");
+                        ToastUtils.showLong(platform.getDb().exportData());
+                        LogUtils.w(platform.getDb().exportData());
                     }
 
                     @Override
                     public void onError(Platform platform, int i, Throwable throwable) {
-
+                        ToastUtils.showLong("onError");
                     }
 
                     @Override
                     public void onCancel(Platform platform, int i) {
-
+                        ToastUtils.showLong("onCancel");
                     }
                 }); // 设置分享事件回调
                 wechat.authorize();//单独授权
@@ -180,13 +183,14 @@ public class SsdsHomeMainFragment extends SimpleFragment {
         oks.disableSSOWhenAuthorize();
 
         // title标题，微信、QQ和QQ空间等平台使用
-        oks.setTitle("随身大师App");
+        oks.setTitle("随身大师");
         // titleUrl QQ和QQ空间跳转链接
         oks.setTitleUrl("https://www.dashi1314.com/");
         // text是分享文本，所有平台都需要这个字段
-        oks.setText("命理真综，面相恒真");
+        oks.setText("命理真综，面相恒真，八极灵数、风水堪舆、易经命理、玄学预测");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImagePath("/sdcard/test.png");//确保SDcard下面存在此张图片
+        oks.setImageUrl("https://www.dashi1314.com/images/banner02.jpg");
+//        oks.setImagePath("/sdcard/test.png");//确保SDcard下面存在此张图片
 //        oks.setImagePath("file:///android_asset/test.png");//确保SDcard下面存在此张图片
         // url在微信、微博，Facebook等平台中使用
         oks.setUrl("https://www.dashi1314.com/");
