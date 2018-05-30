@@ -12,13 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".mvp.ui.activity.MainActivity">
+        <activity android:name=".mvp.ui.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".mvp.ui.activity.MainActivity"/>
+        <activity android:name=".mvp.ui.activity.LoginActivity"/>
+        <activity android:name=".mvp.ui.activity.RegisterActivity"/>
 
         <!-- 阿里云推送 -->
         <meta-data android:name="com.alibaba.app.appkey" android:value="24874150"/> <!-- 请填写你自己的- appKey -->

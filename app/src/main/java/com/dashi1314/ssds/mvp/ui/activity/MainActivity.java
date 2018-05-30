@@ -1,5 +1,8 @@
 package com.dashi1314.ssds.mvp.ui.activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -32,6 +35,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private String mShowFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN;
 
     private HashMap<String, Class<? extends SupportFragment>> mLoadFragments = new HashMap<>();
+
+    public static void launch(Activity activity) {
+        activity.startActivity(new Intent(activity, MainActivity.class));
+        activity.finish();
+    }
 
     @Override
     protected void initInject() {
