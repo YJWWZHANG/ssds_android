@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dashi1314.common.base.BaseActivity;
 import com.dashi1314.ssds.R;
 import com.dashi1314.ssds.di.component.DaggerActivityComponent;
@@ -15,6 +16,8 @@ import com.dashi1314.ssds.mvp.presenter.LoginPresenter;
 import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View{
+
+    private long mExitTime;
 
     public static void launch(Activity activity) {
         activity.startActivity(new Intent(activity, LoginActivity.class));
@@ -38,7 +41,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void onBackPressedSupport() {
-        AppUtils.exitApp();
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtils.showShort("再按一次退出程序");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            AppUtils.exitApp();
+        }
     }
 
     @OnClick({R.id.btn_login, R.id.btn_register})

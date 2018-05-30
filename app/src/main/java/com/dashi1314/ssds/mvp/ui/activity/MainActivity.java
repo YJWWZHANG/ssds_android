@@ -1,12 +1,12 @@
 package com.dashi1314.ssds.mvp.ui.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.dashi1314.common.base.BaseActivity;
 import com.dashi1314.common.base.NullFragment;
 import com.dashi1314.common.router.RouterConstants;
@@ -30,6 +30,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     TextView mTvTitle;
     @BindView(R.id.bottom_bar)
     BottomBar mBottomBar;
+
+    private long mExitTime;
 
     private String mHideFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN;
     private String mShowFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN;
@@ -87,7 +89,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void onBackPressedSupport() {
-        AppUtils.exitApp();
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtils.showShort("再按一次退出程序");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            AppUtils.exitApp();
+        }
     }
 
     @Override
