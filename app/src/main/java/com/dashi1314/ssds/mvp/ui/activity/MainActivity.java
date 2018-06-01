@@ -33,8 +33,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private long mExitTime;
 
-    private String mHideFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN;
-    private String mShowFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN;
+    private String mHideFragment = RouterConstants.PATH_SSDSMASTER_FRAGMENT_HOME;
+    private String mShowFragment = RouterConstants.PATH_SSDSMASTER_FRAGMENT_HOME;
 
     private HashMap<String, Class<? extends SupportFragment>> mLoadFragments = new HashMap<>();
 
@@ -55,8 +55,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     protected void initEventAndData() {
-        if (mLoadFragments.get(RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN) == null) {
-            loadMultipleRootFragment(R.id.fl_content, 0, getTargetFragment(RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN), getTargetFragment(RouterConstants.PATH_SSDSIM_FRAGMENT_MAIN), getTargetFragment("/ssdsim/3"));
+        if (mLoadFragments.get(RouterConstants.PATH_SSDSMASTER_FRAGMENT_HOME) == null) {
+            loadMultipleRootFragment(R.id.fl_content, 0, getTargetFragment(RouterConstants.PATH_SSDSMASTER_FRAGMENT_HOME), getTargetFragment(RouterConstants.PATH_SSDSIM_FRAGMENT_MAIN), getTargetFragment("/ssdsim/3"));
         }
 
         mTvTitle.setText(R.string.app_name);
@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 String title = "";
                 switch (tabId) {
                     case R.id.nav_1:
-                        mShowFragment = RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN;
+                        mShowFragment = RouterConstants.PATH_SSDSMASTER_FRAGMENT_HOME;
                         title = "1";
                         break;
                     case R.id.nav_2:

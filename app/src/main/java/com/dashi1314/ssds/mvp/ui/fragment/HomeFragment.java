@@ -26,8 +26,8 @@ import cn.sharesdk.wechat.friends.Wechat;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
-@Route(path = RouterConstants.PATH_SSDSHOME_FRAGMENT_MAIN)
-public class SsdsHomeMainFragment extends SimpleFragment {
+@Route(path = RouterConstants.PATH_SSDSMASTER_FRAGMENT_HOME)
+public class HomeFragment extends SimpleFragment {
     @BindView(R.id.et_code)
     EditText mEtCode;
     @BindView(R.id.et_phone)
@@ -35,7 +35,7 @@ public class SsdsHomeMainFragment extends SimpleFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.ssdshome_fragment_main;
+        return R.layout.fragment_home;
     }
 
     @Override

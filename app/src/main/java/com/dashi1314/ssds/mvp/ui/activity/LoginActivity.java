@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.view.View;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
 import com.dashi1314.common.base.BaseActivity;
 import com.dashi1314.ssds.R;
 import com.dashi1314.ssds.di.component.DaggerActivityComponent;
 import com.dashi1314.ssds.di.module.ActivityModule;
 import com.dashi1314.ssds.mvp.contract.LoginContract;
+import com.dashi1314.common.utils.SecretKeyUtil;
 import com.dashi1314.ssds.mvp.presenter.LoginPresenter;
 
 import butterknife.OnClick;
@@ -49,15 +52,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
     }
 
-    @OnClick({R.id.btn_login, R.id.btn_register})
+    @OnClick({R.id.btn_login, R.id.btn_get_secret_key})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
                 mPresenter.login("", "");
                 MainActivity.launch(this);
                 break;
-            case R.id.btn_register:
-                RegisterActivity.launch(this);
+            case R.id.btn_get_secret_key:
+                LogUtils.w(SecretKeyUtil.getSecretKey(Utils.getApp()));
+                ToastUtils.showLong(SecretKeyUtil.getSecretKey(Utils.getApp()));
                 break;
         }
     }

@@ -14,6 +14,8 @@ import com.dashi1314.ssds.R;
 import com.dashi1314.ssds.service.PushMessageIntentService;
 import com.mob.MobSDK;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class App extends Application {
 
     @Override
@@ -29,6 +31,9 @@ public class App extends Application {
         initCloudChannel(this);
 
         MobSDK.init(this);
+
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     private boolean isDebug() {
@@ -50,7 +55,7 @@ public class App extends Application {
             @Override
             public void onSuccess(String response) {
                 LogUtils.w("init cloudchannel success");
-                ToastUtils.showLong("" + pushService.getDeviceId());
+//                ToastUtils.showLong("" + pushService.getDeviceId());
             }
 
             @Override
