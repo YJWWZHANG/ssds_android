@@ -2,8 +2,10 @@ package com.dashi1314.ssds.mvp.ui.fragment;
 
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alipay.sdk.app.PayTask;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -11,8 +13,12 @@ import com.blankj.utilcode.util.Utils;
 import com.dashi1314.common.base.SimpleFragment;
 import com.dashi1314.common.router.RouterConstants;
 import com.dashi1314.ssds.R;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,7 +49,8 @@ public class HomeFragment extends SimpleFragment {
 
     }
 
-    @OnClick({R.id.btn_send, R.id.btn_commit, R.id.btn_share, R.id.btn_qq_login, R.id.btn_wechat_login, R.id.btn_sina_login})
+    @OnClick({R.id.btn_send, R.id.btn_commit, R.id.btn_share, R.id.btn_qq_login, R.id.btn_wechat_login, R.id.btn_sina_login,
+                R.id.btn_wechatpay, R.id.btn_alipay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
@@ -132,6 +139,31 @@ public class HomeFragment extends SimpleFragment {
                 }); // 设置分享事件回调
                 sinaWiebo.authorize();//单独授权
                 sinaWiebo.showUser(null);//授权并获取用户信息
+                break;
+
+            case R.id.btn_wechatpay:
+                PayReq req = new PayReq();
+                //req.appId = "wxf8b4f85f3a794e77";  // 测试用appId
+                req.appId			= "123456789";
+                req.partnerId		= "123456789";
+                req.prepayId		= "123456789";
+                req.nonceStr		= "123456789";
+                req.timeStamp		= "123456789";
+                req.packageValue	= "123456789";
+                req.sign			= "123456789";
+                req.extData			= "app data"; // optional
+                Toast.makeText(getActivity(), "正常调起支付", Toast.LENGTH_SHORT).show();
+                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                WXAPIFactory.createWXAPI(Utils.getApp(), "wxd930ea5d5a258f4f").sendReq(req);
+                break;
+            case R.id.btn_alipay:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        PayTask payTask = new PayTask(getActivity());
+                        Map<String, String> result = payTask.payV2("appid=\"2088011085074233\"&biz_content={\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"0.01\",\"subject\":\"1\",\"body\":\"我是测试数据\",\"out_trade_no\":\"123456789\"&charset=\"utf-8\"&method=\"alipay.trade.app.pay\"&sign_type=\"RSA2\"&timestamp=\"2016-07-29 16:55:53\"&version=\"1.0\"", true);
+                    }
+                }).start();
                 break;
             default:
                 break;

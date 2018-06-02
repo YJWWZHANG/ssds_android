@@ -51,13 +51,12 @@
         android:id="@+id/btn_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="分享"
-        app:layout_constraintBottom_toTopOf="@+id/btn_qq_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_wechatpay"
         />
 
     <Button
@@ -80,7 +79,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_qq_login"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <Button
         android:id="@+id/btn_sina_login"
@@ -90,7 +90,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_qq_login"/>
+        app:layout_constraintStart_toEndOf="@+id/btn_qq_login"
+        />
 
     <Button
         android:id="@+id/btn_push"
@@ -121,4 +122,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside"/>
+
+    <Button
+        android:id="@+id/btn_wechatpay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="微信支付"
+        app:layout_constraintBottom_toTopOf="@+id/btn_wechat_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_wechat_login"/>
+
+    <Button
+        android:id="@+id/btn_alipay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="支付宝支付"
+        app:layout_constraintEnd_toEndOf="@+id/btn_sina_login"
+        app:layout_constraintTop_toTopOf="@+id/btn_share"/>
 </android.support.constraint.ConstraintLayout>
