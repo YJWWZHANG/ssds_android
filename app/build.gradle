@@ -23,11 +23,14 @@ MobSDK {
                 appId "wx5ce30bc35cb2c554"
                 appSecret "254f63668cc2c2748b260d052c4c7b28"
             }
+            WechatMoments {
+
+            }
             QQ {
                 appId "100371282"
                 appKey "aed9b0303e3ed1e27bae87c33761161d"
             }
-            WechatMoments {
+            QZone {
 
             }
 //            Facebook {

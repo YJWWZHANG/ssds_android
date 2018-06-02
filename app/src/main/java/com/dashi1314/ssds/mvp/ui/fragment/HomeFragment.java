@@ -1,5 +1,6 @@
 package com.dashi1314.ssds.mvp.ui.fragment;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.dashi1314.common.base.SimpleFragment;
+import com.dashi1314.common.bean.PayResult;
 import com.dashi1314.common.router.RouterConstants;
 import com.dashi1314.ssds.R;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -31,6 +33,15 @@ import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 @Route(path = RouterConstants.PATH_SSDSMASTER_FRAGMENT_HOME)
 public class HomeFragment extends SimpleFragment {
@@ -157,13 +168,35 @@ public class HomeFragment extends SimpleFragment {
                 WXAPIFactory.createWXAPI(Utils.getApp(), "wxd930ea5d5a258f4f").sendReq(req);
                 break;
             case R.id.btn_alipay:
-                new Thread(new Runnable() {
+                Observable.create(new ObservableOnSubscribe<Map<String, String>>() {
                     @Override
-                    public void run() {
+                    public void subscribe(ObservableEmitter<Map<String, String>> e) throws Exception {
                         PayTask payTask = new PayTask(getActivity());
                         Map<String, String> result = payTask.payV2("appid=\"2088011085074233\"&biz_content={\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"0.01\",\"subject\":\"1\",\"body\":\"我是测试数据\",\"out_trade_no\":\"123456789\"&charset=\"utf-8\"&method=\"alipay.trade.app.pay\"&sign_type=\"RSA2\"&timestamp=\"2016-07-29 16:55:53\"&version=\"1.0\"", true);
+                        e.onNext(result);
                     }
-                }).start();
+                }).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<Map<String, String>>() {
+                            @Override
+                            public void accept(Map<String, String> stringStringMap) throws Exception {
+                                PayResult payResult = new PayResult(stringStringMap);
+                                /**
+                                 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                                 */
+                                String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                                String resultStatus = payResult.getResultStatus();
+                                // 判断resultStatus 为9000则代表支付成功
+                                if (TextUtils.equals(resultStatus, "9000")) {
+                                    // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                                    ToastUtils.showLong("支付成功");
+                                } else {
+                                    // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                                    ToastUtils.showLong("支付失败");
+                                }
+
+                            }
+                        });
                 break;
             default:
                 break;

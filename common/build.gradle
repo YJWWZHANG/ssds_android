@@ -60,4 +60,8 @@ dependencies {
     api 'me.yokeyword:fragmentation:1.3.3'
     /*支付*/
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    /*网络*/
+    api 'com.lzy.net:okgo:3.0.4'
+    api 'com.lzy.net:okrx2:2.0.2'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
 }
