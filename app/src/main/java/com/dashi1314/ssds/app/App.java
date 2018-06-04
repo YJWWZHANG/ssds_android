@@ -34,6 +34,7 @@ public class App extends Application {
 
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+        JPushInterface.setAlias(this, 10010, "zqb1");
     }
 
     private boolean isDebug() {
