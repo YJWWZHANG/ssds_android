@@ -5,22 +5,112 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.dalimao.corelibrary.VerificationCodeInput
+        android:id="@+id/verification_code_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        app:box="4"
+        app:child_h_padding="4dp"
+        app:layout_constraintStart_toStartOf="@+id/et_phone"
+        app:layout_constraintTop_toBottomOf="@+id/et_phone"/>
+
+    <com.white.countdownbutton.CountDownButton
+        android:id="@+id/count_down_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="获取验证码"
+        app:cdFinishText="获取验证码"
+        app:countDown="60000"
+        app:countDownFormat="(%ds)后重试"
+        app:countDownInterval="1000"
+        app:layout_constraintBottom_toBottomOf="@+id/verification_code_input"
+        app:layout_constraintEnd_toEndOf="@+id/et_phone"/>
+
     <Button
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:enabled="false"
         android:text="登录"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verification_code_input"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="152dp"
+        android:text="请输入手机号码"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <Button
-        android:id="@+id/btn_get_secret_key"
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/country_code_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="获取密钥"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:ccp_defaultNameCode="CN"
+        app:ccp_defaultLanguage="CHINESE_SIMPLIFIED"
+        app:ccp_countryPreference="CN,HK,MO,TW"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+    <!--app:ccp_customMasterCountries="CN,HK,MO,TW,US,IN,NZ,BD,PL,RO,ZW"-->
+
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:hint="请输入手机号"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/country_code_picker"
+        app:layout_constraintTop_toBottomOf="@+id/country_code_picker"/>
+
+    <ImageButton
+        android:id="@+id/ibtn_wechat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:background="@color/material_transparent"
+        app:layout_constraintEnd_toStartOf="@+id/ibtn_qq"
+        app:layout_constraintTop_toTopOf="@+id/ibtn_qq"
+        app:srcCompat="@drawable/ssdk_oks_classic_wechat"/>
+
+    <ImageButton
+        android:id="@+id/ibtn_qq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/material_transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        app:srcCompat="@drawable/ssdk_oks_classic_qq"/>
+
+    <ImageButton
+        android:id="@+id/ibtn_weibo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:background="@color/material_transparent"
+        app:layout_constraintStart_toEndOf="@+id/ibtn_qq"
+        app:layout_constraintTop_toTopOf="@+id/ibtn_qq"
+        app:srcCompat="@drawable/ssdk_oks_classic_sinaweibo"/>
 </android.support.constraint.ConstraintLayout>

@@ -60,8 +60,7 @@ public class HomeFragment extends SimpleFragment {
 
     }
 
-    @OnClick({R.id.btn_send, R.id.btn_commit, R.id.btn_share, R.id.btn_qq_login, R.id.btn_wechat_login, R.id.btn_sina_login,
-                R.id.btn_wechatpay, R.id.btn_alipay})
+    @OnClick({R.id.btn_send, R.id.btn_commit, R.id.btn_share, R.id.btn_wechatpay, R.id.btn_alipay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_send:
@@ -83,75 +82,6 @@ public class HomeFragment extends SimpleFragment {
             case R.id.btn_share:
                 showShare();
                 break;
-            case R.id.btn_wechat_login:
-                Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
-                wechat.SSOSetting(false);  //设置false表示使用SSO授权方式
-                wechat.setPlatformActionListener(new PlatformActionListener() {
-                    @Override
-                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                        ToastUtils.showLong("onComplete");
-                        ToastUtils.showLong(platform.getDb().exportData());
-                        LogUtils.w(platform.getDb().exportData());
-                    }
-
-                    @Override
-                    public void onError(Platform platform, int i, Throwable throwable) {
-                        ToastUtils.showLong("onError");
-                    }
-
-                    @Override
-                    public void onCancel(Platform platform, int i) {
-                        ToastUtils.showLong("onCancel");
-                    }
-                }); // 设置分享事件回调
-                wechat.authorize();//单独授权
-                wechat.showUser(null);//授权并获取用户信息
-                break;
-            case R.id.btn_qq_login:
-                Platform qq = ShareSDK.getPlatform(QQ.NAME);
-                qq.SSOSetting(false);  //设置false表示使用SSO授权方式
-                qq.setPlatformActionListener(new PlatformActionListener() {
-                    @Override
-                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-
-                    }
-
-                    @Override
-                    public void onError(Platform platform, int i, Throwable throwable) {
-
-                    }
-
-                    @Override
-                    public void onCancel(Platform platform, int i) {
-
-                    }
-                }); // 设置分享事件回调
-                qq.authorize();//单独授权
-                qq.showUser(null);//授权并获取用户信息
-                break;
-            case R.id.btn_sina_login:
-                Platform sinaWiebo = ShareSDK.getPlatform(SinaWeibo.NAME);
-                sinaWiebo.SSOSetting(false);  //设置false表示使用SSO授权方式
-                sinaWiebo.setPlatformActionListener(new PlatformActionListener() {
-                    @Override
-                    public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-
-                    }
-
-                    @Override
-                    public void onError(Platform platform, int i, Throwable throwable) {
-
-                    }
-
-                    @Override
-                    public void onCancel(Platform platform, int i) {
-
-                    }
-                }); // 设置分享事件回调
-                sinaWiebo.authorize();//单独授权
-                sinaWiebo.showUser(null);//授权并获取用户信息
-                break;
-
             case R.id.btn_wechatpay:
                 PayReq req = new PayReq();
                 //req.appId = "wxf8b4f85f3a794e77";  // 测试用appId
