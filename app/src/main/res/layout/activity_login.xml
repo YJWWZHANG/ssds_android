@@ -5,17 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.dalimao.corelibrary.VerificationCodeInput
-        android:id="@+id/verification_code_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="8dp"
-        app:box="4"
-        app:child_h_padding="4dp"
-        app:layout_constraintStart_toStartOf="@+id/et_phone"
-        app:layout_constraintTop_toBottomOf="@+id/et_phone"/>
-
     <com.white.countdownbutton.CountDownButton
         android:id="@+id/count_down_button"
         android:layout_width="0dp"
@@ -41,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/verification_code_input"/>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -58,13 +47,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        app:ccp_defaultNameCode="CN"
-        app:ccp_defaultLanguage="CHINESE_SIMPLIFIED"
         app:ccp_countryPreference="CN,HK,MO,TW"
+        app:ccp_defaultLanguage="CHINESE_SIMPLIFIED"
+        app:ccp_defaultNameCode="CN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_temp"/>
     <!--app:ccp_customMasterCountries="CN,HK,MO,TW,US,IN,NZ,BD,PL,RO,ZW"-->
 
 
@@ -79,6 +68,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/country_code_picker"
         app:layout_constraintTop_toBottomOf="@+id/country_code_picker"/>
+
+    <com.dalimao.corelibrary.VerificationCodeInput
+        android:id="@+id/verification_code_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        app:box="4"
+        app:child_h_padding="2dp"
+        app:child_height="45dp"
+        app:child_width="45dp"
+        app:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/et_phone"
+        app:layout_constraintTop_toBottomOf="@+id/et_phone"/>
 
     <ImageButton
         android:id="@+id/ibtn_wechat"

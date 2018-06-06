@@ -74,9 +74,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        multiDexEnabled true
+
         ndk {
             //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'x86'
+            abiFilters 'armeabi' // 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
 
         manifestPlaceholders = [
@@ -85,13 +87,11 @@ android {
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
 
-
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
         debug {
             signingConfig signingConfigs.config
@@ -109,6 +109,8 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.dependencies.butterknife"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dependencies.dagger2"
     annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.dependencies.router_compiler"
+
+    implementation 'com.android.support:multidex:1.0.3'
     /*阿里云推送*/
     implementation 'com.aliyun.ams:alicloud-android-push:3.1.2'
 
@@ -116,7 +118,7 @@ dependencies {
     implementation 'cn.jiguang.sdk:jcore:1.2.1'
 
     implementation 'com.hbb20:ccp:2.2.0'
-    implementation 'com.github.liuguangli:VerificationCodeInput:1.3'
+    implementation 'com.github.liuguangli:VerificationCodeInput:1.5'
 
     implementation 'com.white.countdownbutton:countdownbtn:1.0.4'
 

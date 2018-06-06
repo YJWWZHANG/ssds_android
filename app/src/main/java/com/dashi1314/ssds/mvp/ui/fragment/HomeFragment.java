@@ -45,10 +45,6 @@ import io.reactivex.schedulers.Schedulers;
 
 @Route(path = RouterConstants.PATH_SSDSMASTER_FRAGMENT_HOME)
 public class HomeFragment extends SimpleFragment {
-    @BindView(R.id.et_code)
-    EditText mEtCode;
-    @BindView(R.id.et_phone)
-    EditText mEtPhone;
 
     @Override
     protected int getLayoutId() {
@@ -60,25 +56,9 @@ public class HomeFragment extends SimpleFragment {
 
     }
 
-    @OnClick({R.id.btn_send, R.id.btn_commit, R.id.btn_share, R.id.btn_wechatpay, R.id.btn_alipay})
+    @OnClick({R.id.btn_share, R.id.btn_wechatpay, R.id.btn_alipay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_send:
-                String phone = mEtPhone.getText().toString();
-                if (!StringUtils.isSpace(phone)) {
-                    sendCode("86", phone);
-                } else {
-                    ToastUtils.showShort("请输入手机号");
-                }
-                break;
-            case R.id.btn_commit:
-                String code = mEtCode.getText().toString();
-                if (!StringUtils.isSpace(code)) {
-                    submitCode("86", "15813368484", code);
-                } else {
-                    ToastUtils.showShort("请输入验证码");
-                }
-                break;
             case R.id.btn_share:
                 showShare();
                 break;
@@ -131,45 +111,6 @@ public class HomeFragment extends SimpleFragment {
             default:
                 break;
         }
-    }
-
-    // 请求验证码，其中country表示国家代码，如“86”；phone表示手机号码，如“13800138000”
-    public void sendCode(String country, String phone) {
-        // 注册一个事件回调，用于处理发送验证码操作的结果
-        SMSSDK.registerEventHandler(new EventHandler() {
-            public void afterEvent(int event, int result, Object data) {
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    // TODO 处理成功得到验证码的结果
-                    // 请注意，此时只是完成了发送验证码的请求，验证码短信还需要几秒钟之后才送达
-                    ToastUtils.showLong("验证码发送成功");
-                } else {
-                    // TODO 处理错误的结果
-                    ToastUtils.showLong("验证码发送失败");
-                }
-
-            }
-        });
-        // 触发操作
-        SMSSDK.getVerificationCode(country, phone);
-    }
-
-    // 提交验证码，其中的code表示验证码，如“1357”
-    public void submitCode(String country, String phone, String code) {
-        // 注册一个事件回调，用于处理提交验证码操作的结果
-        SMSSDK.registerEventHandler(new EventHandler() {
-            public void afterEvent(int event, int result, Object data) {
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    // TODO 处理验证成功的结果
-                    ToastUtils.showLong("手机号验证成功");
-                } else {
-                    // TODO 处理错误的结果
-                    ToastUtils.showLong("手机号验证失败");
-                }
-
-            }
-        });
-        // 触发操作
-        SMSSDK.submitVerificationCode(country, phone, code);
     }
 
     private void showShare() {

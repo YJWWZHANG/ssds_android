@@ -1,6 +1,7 @@
 package com.dashi1314.ssds.app;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -16,7 +17,7 @@ import com.mob.MobSDK;
 
 import cn.jpush.android.api.JPushInterface;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     @Override
     public void onCreate() {
