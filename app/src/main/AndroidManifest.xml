@@ -19,26 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.MainActivity"/>
+        <activity android:name=".mvp.ui.activity.MainActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".mvp.ui.activity.LoginActivity"/>
-
-        <!-- 阿里云推送 -->
-        <meta-data android:name="com.alibaba.app.appkey" android:value="24874150"/> <!-- 请填写你自己的- appKey -->
-        <meta-data android:name="com.alibaba.app.appsecret" android:value="9ab693cdf2d31d0f724fb696b83be95e"/> <!-- 请填写你自己的appSecret -->
-        <service
-            android:name=".service.PushMessageIntentService"
-            android:exported="false">
-            <intent-filter> 
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
-            </intent-filter>
-            <intent-filter>     
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
-            </intent-filter>
-        </service>
-
 
         <!--极光推送-->
         <!-- User defined.  For test only  用户自定义的广播接收器-->

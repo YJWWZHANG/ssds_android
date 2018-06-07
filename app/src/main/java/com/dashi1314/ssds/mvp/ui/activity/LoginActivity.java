@@ -2,26 +2,36 @@ package com.dashi1314.ssds.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.dalimao.corelibrary.VerificationCodeInput;
 import com.dashi1314.common.Constants;
 import com.dashi1314.common.base.BaseActivity;
+import com.dashi1314.common.bean.SmsCodeErrorMessage;
 import com.dashi1314.ssds.R;
 import com.dashi1314.ssds.di.component.DaggerActivityComponent;
 import com.dashi1314.ssds.di.module.ActivityModule;
 import com.dashi1314.ssds.mvp.contract.LoginContract;
 import com.dashi1314.ssds.mvp.presenter.LoginPresenter;
+import com.google.gson.Gson;
 import com.hbb20.CountryCodePicker;
 import com.white.countdownbutton.CountDownButton;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,9 +53,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     VerificationCodeInput mVerificationCodeInput;
     @BindView(R.id.btn_login)
     Button mBtnLogin;
+    @BindView(R.id.cb_agree)
+    CheckBox mCbAgree;
     private long mExitTime;
     private String mCode;
-    private boolean mIsValidNumber = false;
 
     public static void launch(Activity activity) {
         activity.startActivity(new Intent(activity, LoginActivity.class));
@@ -66,16 +77,29 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     protected void initEventAndData() {
         mVerificationCodeInput.setEnabled(false);
         mCountryCodePicker.registerCarrierNumberEditText(mEtPhone);
+        AndPermission.with(this)
+            .runtime()
+            .permission(Permission.READ_EXTERNAL_STORAGE)
+            .onGranted(new Action<List<String>>() {
+                @Override
+                public void onAction(List<String> data) {
+
+                }
+            }).onDenied(new Action<List<String>>() {
+                @Override
+                public void onAction(List<String> data) {
+
+                }
+            }).start();
         mCountryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {
-                ToastUtils.showShort(mCountryCodePicker.getSelectedCountryName());
+//                ToastUtils.showShort(mCountryCodePicker.getSelectedCountryName());
             }
         });
         mCountryCodePicker.setPhoneNumberValidityChangeListener(new CountryCodePicker.PhoneNumberValidityChangeListener() {
             @Override
             public void onValidityChanged(boolean isValidNumber) {
-                mIsValidNumber = isValidNumber;
                 if (isValidNumber) {
                     mCountDownButton.setEnabled(true);
                     KeyboardUtils.hideSoftInput(LoginActivity.this);
@@ -88,9 +112,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             @Override
             public void onComplete(String content) {
                 mCode = content;
-                if (mIsValidNumber) {
-                    mBtnLogin.setEnabled(true);
-                }
+                mBtnLogin.setEnabled(true);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mVerificationCodeInput.setEnabled(true);
+                    }
+                }, 20);
             }
         });
     }
@@ -105,11 +133,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
     }
 
-    @OnClick({R.id.btn_login, R.id.ibtn_wechat, R.id.ibtn_qq, R.id.ibtn_weibo, R.id.count_down_button, R.id.tv_temp})
+    @OnClick({R.id.btn_login, R.id.ibtn_wechat, R.id.ibtn_qq, R.id.ibtn_weibo, R.id.count_down_button, R.id.tv_temp,
+            R.id.tv_user_protocol})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                mPresenter.submitCode(mCountryCodePicker.getSelectedCountryCode(), mCountryCodePicker.getFullNumber().replaceFirst(mCountryCodePicker.getSelectedCountryCode(), ""), mCode);
+                if (mCbAgree.isChecked()) {
+                    mPresenter.submitCode(mCountryCodePicker.getSelectedCountryCode(), mCountryCodePicker.getFullNumber().replaceFirst(mCountryCodePicker.getSelectedCountryCode(), ""), mCode);
+                } else {
+                    ToastUtils.showShort("请同意我们的用户协议");
+                }
                 break;
             case R.id.ibtn_wechat:
                 mPresenter.platformAuthorize(Wechat.NAME);
@@ -121,11 +154,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 mPresenter.platformAuthorize(SinaWeibo.NAME);
                 break;
             case R.id.count_down_button:
-                LogUtils.wTag(Constants.LOG_TAG, mCountryCodePicker.getSelectedCountryCode(), mCountryCodePicker.getFullNumber().replaceFirst(mCountryCodePicker.getSelectedCountryCode(), ""));
                 mPresenter.sendCode(mCountryCodePicker.getSelectedCountryCode(), mCountryCodePicker.getFullNumber().replaceFirst(mCountryCodePicker.getSelectedCountryCode(), ""));
                 break;
             case R.id.tv_temp:
                 MainActivity.launch(this);
+                break;
+            case R.id.tv_user_protocol:
+                ToastUtils.showShort("随身大师用户服务协议");
                 break;
             default:
                 break;
@@ -148,8 +183,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         switch (event) {
             case SMSSDK.EVENT_GET_VERIFICATION_CODE:
                 if (result == SMSSDK.RESULT_COMPLETE) {
-                    boolean smart = (Boolean)data;
-                    if(smart) {
+                    boolean smart = (Boolean) data;
+                    if (smart) {
                         //通过Mob云验证
 //                        ToastUtils.showLong("当前设备当天已验证过，直接通过云验证");
                     } else {
@@ -160,36 +195,34 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                         mEtPhone.setFocusableInTouchMode(false);
                         mVerificationCodeInput.setFocusable(true);
                         mVerificationCodeInput.setFocusableInTouchMode(true);
+                        KeyboardUtils.showSoftInput(this);
                     }
                 } else {
-                    ToastUtils.showLong("验证码发送失败，当天验证次数10条限额已用完");
-                    LogUtils.wTag(Constants.LOG_TAG, ((Throwable)data).getMessage());
+                    String errorMessage = ((Throwable) data).getMessage();
+                    if (errorMessage.contains("status") && errorMessage.contains("description")) {
+                        SmsCodeErrorMessage smsCodeErrorMessage = new Gson().fromJson(errorMessage, SmsCodeErrorMessage.class);
+                        ToastUtils.showShort(smsCodeErrorMessage.getDescription());
+                    } else {
+                        ToastUtils.showLong("发送验证码失败，请检查网络");
+                    }
+                    LogUtils.wTag(Constants.LOG_TAG, errorMessage);
                     mCountDownButton.removeCountDown();
                 }
                 break;
             case SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE:
                 if (result == SMSSDK.RESULT_COMPLETE) {
+                    LogUtils.wTag(Constants.LOG_TAG, "进入首页");
                     MainActivity.launch(LoginActivity.this);
                 } else {
                     ToastUtils.showLong("手机号验证失败");
-                    LogUtils.wTag(Constants.LOG_TAG, ((Throwable)data).getMessage());
+                    LogUtils.wTag(Constants.LOG_TAG, ((Throwable) data).getMessage());
                     mVerificationCodeInput.setEnabled(true);
                 }
                 break;
             default:
                 break;
         }
-    }
-
-    @Override
-    public void submitCodeResult(int result) {
-        if (result == SMSSDK.RESULT_COMPLETE) {
-            ToastUtils.showLong("手机号验证成功");
-            MainActivity.launch(LoginActivity.this);
-        } else {
-            ToastUtils.showLong("手机号验证失败");
-            mVerificationCodeInput.setEnabled(true);
-        }
+        SMSSDK.unregisterAllEventHandler();
     }
 
     @Override
